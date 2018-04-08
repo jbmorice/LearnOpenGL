@@ -6,31 +6,10 @@
 class Ex1_2_Hello_Triangle : public ExerciseBase
 {
 private:
-	unsigned int m_VBO;
-
-	const char* m_vertexShaderSource = "\
-		#version 330 core\n\
-		layout (location = 0) in vec3 aPos;\n\
-		\n\
-		void main()\n\
-		{\n\
-			gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0f);\n\
-		}\n\
-	";
-
-	const char* m_fragmentShaderSource = "\
-		#version 330 core\n\
-		out vec4 FragColor;\n\
-		\n\
-		void main()\n\
-		{\n\
-			FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n\
-		}\n\
-	";
-
 	unsigned int m_shaderProgram;
 
 	unsigned int m_VAO;
+	unsigned int m_VBO;
 
 	void prepare() override
 	{
@@ -40,8 +19,19 @@ private:
 		// Create an OpenGL object for the vertex shader
 		unsigned int vertexShader;
 		vertexShader = glCreateShader(GL_VERTEX_SHADER);
+
+		const char* vertexShaderSource = "\
+			#version 330 core\n\
+			layout (location = 0) in vec3 aPos;\n\
+			\n\
+			void main()\n\
+			{\n\
+				gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0f);\n\
+			}\n\
+		";
+
 		// Attach our source and compile
-		glShaderSource(vertexShader, 1, &m_vertexShaderSource, nullptr);
+		glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
 		glCompileShader(vertexShader);
 
 		// Check for compilation errors
@@ -60,6 +50,17 @@ private:
 		// Same for the fragment shader
 		unsigned int fragmentShader;
 		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+		const char* m_fragmentShaderSource = "\
+			#version 330 core\n\
+			out vec4 FragColor;\n\
+			\n\
+			void main()\n\
+			{\n\
+				FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n\
+			}\n\
+		";
+
 		glShaderSource(fragmentShader, 1, &m_fragmentShaderSource, nullptr);
 		glCompileShader(fragmentShader);
 
@@ -139,13 +140,12 @@ private:
 		// modifying them later
 		glBindBuffer(0, GL_ARRAY_BUFFER);
 		glBindVertexArray(0);
-
 	}
 
 	void render() override
 	{
 		// Clear our color buffer to black before drawing
-		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Activate the shader program
@@ -162,7 +162,9 @@ private:
 
 	void cleanup() override
 	{
-
+		glDeleteProgram(m_shaderProgram);
+		glDeleteVertexArrays(1, &m_VAO);
+		glDeleteBuffers(1, &m_VBO);
 	}
 
 public:
