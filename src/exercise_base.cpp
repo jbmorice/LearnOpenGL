@@ -1,41 +1,27 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "exercise_base.h"
 #include <iostream>
-#include <string>
+#include <glad/glad.h>
 
-////////////////////////
-// Callback functions
-////////////////////////
-
-// Callback function to print GLFW errors in console
-void gflwErrorCallback(int error, const char* description)
+void ExerciseBase::gflwErrorCallback(int error, const char* description)
 {
 	std::cout << description << std::endl;
 }
 
-// Callback function to adapt OpenGL viewport according to the GLFW window
-void glfwFramebufferSizeCallback(GLFWwindow* window, int width, int height)
+void ExerciseBase::glfwFramebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	// Set OpenGL viewport position and dimensions according to our window
 	glViewport(0, 0, width, height);
 }
 
-////////////////////////
-// Helper functions
-////////////////////////
-
-// Function called at the beginning of the render loop to handle inputs
-void processInput(GLFWwindow* window)
+void ExerciseBase::processInput(GLFWwindow* window)
 {
-	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
 }
 
-////////////////////////
-// Main
-int main(int argc, char* argv[])
+void ExerciseBase::run()
 {
 	// Set the GLFW error callback function
 	glfwSetErrorCallback(gflwErrorCallback);
@@ -47,50 +33,51 @@ int main(int argc, char* argv[])
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Create window
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+	m_window = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName, nullptr, nullptr);
 
-	if(window == nullptr)
+	if (m_window == nullptr)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 
 		std::cin.ignore();
-		return -1;
+		exit(EXIT_FAILURE);
 	}
 
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(m_window);
 
 	// Initialize GLAD (retrieves all OpenGL function pointers)
-	if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 
 		std::cin.ignore();
-		return -1;
+		exit(EXIT_FAILURE);
 	}
 
 	// Set the callback function to resize the viewport with the GLFW window
-	glfwSetFramebufferSizeCallback(window, glfwFramebufferSizeCallback);
+	glfwSetFramebufferSizeCallback(m_window, glfwFramebufferSizeCallback);
 
+	prepare();
+	
 	// Start the render loop (won't stop running unless something tries to close the GLFW window)
-	while(!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(m_window))
 	{
 		// Handle inputs
-		processInput(window);
+		processInput(m_window);
 
 		// Rendering happens here
 		// =====
 
-		glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		render();
 
 		// =====
-		glfwSwapBuffers(window); // Swap the back and front buffers
+		glfwSwapBuffers(m_window); // Swap the back and front buffers
 		glfwPollEvents(); // Check if any event has been triggered and call the according callbacks
 	}
 
+	cleanup();
+
 	// Properly stop GLFW
 	glfwTerminate();
-
-	return 0;
 }

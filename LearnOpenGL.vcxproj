@@ -121,8 +121,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\1_1_hello_window.cpp" />
+    <ClCompile Include="src\exercise_base.cpp" />
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="thirdparty\glad\src\glad.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ex1_2_hello_triangle.hpp" />
+    <ClInclude Include="src\exercise_base.h" />
+    <ClInclude Include="src\ex1_1_hello_window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
