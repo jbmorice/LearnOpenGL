@@ -4,7 +4,7 @@
 
 class ExerciseBase
 {
-private:
+protected:
 	GLFWwindow * m_window;
 	int m_windowWidth, m_windowHeight;
 	const char* m_windowName;
@@ -16,7 +16,7 @@ private:
 	static void glfwFramebufferSizeCallback(GLFWwindow* window, int width, int height);
 
 	// Function called at the beginning of the main loop to handle inputs
-	void processInput(GLFWwindow* window);
+	virtual void processInput(GLFWwindow* window);
 
 	virtual void prepare() = 0;
 	virtual void render() = 0;

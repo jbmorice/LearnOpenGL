@@ -44,5 +44,8 @@
     <ClInclude Include="src\ex1_2_hello_triangle_3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ex1_3_shaders.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

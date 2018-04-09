@@ -130,6 +130,7 @@
     <ClInclude Include="src\ex1_2_hello_triangle_1.hpp" />
     <ClInclude Include="src\ex1_2_hello_triangle_2.hpp" />
     <ClInclude Include="src\ex1_2_hello_triangle_3.hpp" />
+    <ClInclude Include="src\ex1_3_shaders.hpp" />
     <ClInclude Include="src\exercise_base.h" />
     <ClInclude Include="src\ex1_1_hello_window.hpp" />
   </ItemGroup>
