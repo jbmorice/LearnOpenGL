@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ex1_getting_started">
+      <UniqueIdentifier>{27cb38f5-8b7a-4e21-95fc-e714fba2b23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ex1_getting_started\ex1_1_hello_window">
+      <UniqueIdentifier>{ed70a8e8-78e4-41c0-ba4f-0c9bcd731bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ex1_getting_started\ex1_2_hello_triangle">
+      <UniqueIdentifier>{67188316-c851-4c65-aa14-5ec8b70396d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ex1_getting_started\ex1_3_shaders">
+      <UniqueIdentifier>{98d825dd-8137-4464-a292-a2f69938188d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thirdparty\glad\src\glad.c">
@@ -26,26 +38,26 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ex1_1_hello_window.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\exercise_base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex1_2_hello_triangle.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ex1_getting_started\ex1_1_hello_window\ex1_1_hello_window.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_1_hello_window</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex1_2_hello_triangle_1.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex1_2_hello_triangle_2.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_1.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex1_2_hello_triangle_3.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_2.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
-    <ClInclude Include="src\ex1_3_shaders.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_3.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_3_shaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

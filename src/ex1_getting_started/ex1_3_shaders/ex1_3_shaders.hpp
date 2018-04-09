@@ -1,4 +1,7 @@
+#ifndef EX1_3_SHADERS
+#define EX1_3_SHADERS
 #pragma once
+
 #include "exercise_base.h"
 #include <string>
 #include <iostream>
@@ -388,3 +391,5 @@ public:
 	{
 	}
 };
+
+#endif

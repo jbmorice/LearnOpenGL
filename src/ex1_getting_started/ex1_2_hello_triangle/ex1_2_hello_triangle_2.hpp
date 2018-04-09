@@ -1,15 +1,18 @@
+#ifndef EX1_2_HELLO_TRIANGLE_2
+#define EX1_2_HELLO_TRIANGLE_2
 #pragma once
+
 #include "exercise_base.h"
 #include <string>
 #include <iostream>
 
-class Ex1_2_Hello_Triangle_1 : public ExerciseBase
+class Ex1_2_Hello_Triangle_2 : public ExerciseBase
 {
 private:
 	unsigned int m_shaderProgram;
 
-	unsigned int m_VAO;
-	unsigned int m_VBO;
+	unsigned int m_VAOs[2];
+	unsigned int m_VBOs[2];
 
 	void prepare() override
 	{
@@ -94,24 +97,42 @@ private:
 
 		// Prepare the vertex data and its attributes
 		// ==============================
-		glGenVertexArrays(1, &m_VAO);
-		glBindVertexArray(m_VAO);
 
-		glGenBuffers(1, &m_VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+		// First triangle
+		glGenVertexArrays(1, &m_VAOs[1]);
+		glBindVertexArray(m_VAOs[1]);
 
-		// Added vertices
-		float vertices[18] = {
+		glGenBuffers(1, &m_VBOs[1]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBOs[1]);
+
+		float vertices1[9] = {
 			-1.0f, -0.5f, 0.0f,
 			-0.0f, -0.5f, 0.0f,
 			-0.5f, 0.5f,  0.0f,
+		};
 
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices1), vertices1, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
+		glEnableVertexAttribArray(0);
+
+		glBindBuffer(0, GL_ARRAY_BUFFER);
+		glBindVertexArray(0);
+
+		// Second triangle
+		glGenVertexArrays(1, &m_VAOs[2]);
+		glBindVertexArray(m_VAOs[2]);
+
+		glGenBuffers(1, &m_VBOs[2]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBOs[2]);
+
+		float vertices2[9] = {
 			0.0f, -0.5f, 0.0f,
 			1.0f, -0.5f, 0.0f,
 			0.5f, 0.5f, 0.0f
 		};
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 		glEnableVertexAttribArray(0);
@@ -126,23 +147,28 @@ private:
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(m_shaderProgram);
-		glBindVertexArray(m_VAO);
 
-		// Draw 3 more vertices
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		// Bind and draw first triangle
+		glBindVertexArray(m_VAOs[1]);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		// And second
+		glBindVertexArray(m_VAOs[2]);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 
 	void cleanup() override
 	{
 		glDeleteProgram(m_shaderProgram);
-		glDeleteVertexArrays(1, &m_VAO);
-		glDeleteBuffers(1, &m_VBO);
+		glDeleteVertexArrays(2, m_VAOs);
+		glDeleteBuffers(2, m_VBOs);
 	}
 
 public:
-	Ex1_2_Hello_Triangle_1()
-		: ExerciseBase("Exercise 1.2.1 - Hello Triangle (two triangles, one buffer)")
+	Ex1_2_Hello_Triangle_2()
+		: ExerciseBase("Exercise 1.2.2 - Hello Triangle (two triangles, two buffers)")
 	{
 	}
 };
-#pragma once
+
+#endif

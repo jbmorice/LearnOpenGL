@@ -1,3 +1,6 @@
+#ifndef EX1_2_HELLO_TRIANGLE_3
+#define EX1_2_HELLO_TRIANGLE_3
+
 #pragma once
 #include "exercise_base.h"
 #include <string>
@@ -200,4 +203,5 @@ public:
 	{
 	}
 };
-#pragma once
+
+#endif

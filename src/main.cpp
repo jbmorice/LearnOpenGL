@@ -1,9 +1,10 @@
-#include "ex1_1_hello_window.hpp"
-#include "ex1_2_hello_triangle.hpp"
-#include "ex1_2_hello_triangle_1.hpp"
-#include "ex1_2_hello_triangle_2.hpp"
-#include "ex1_2_hello_triangle_3.hpp"
-#include "ex1_3_shaders.hpp"
+#include "exercise_base.h"
+#include "ex1_getting_started/ex1_1_hello_window/ex1_1_hello_window.hpp"
+#include "ex1_getting_started/ex1_2_hello_triangle/ex1_2_hello_triangle.hpp"
+#include "ex1_getting_started/ex1_2_hello_triangle/ex1_2_hello_triangle_1.hpp"
+#include "ex1_getting_started/ex1_2_hello_triangle/ex1_2_hello_triangle_2.hpp"
+#include "ex1_getting_started/ex1_2_hello_triangle/ex1_2_hello_triangle_3.hpp"
+#include "ex1_getting_started/ex1_3_shaders/ex1_3_shaders.hpp"
 
 int main(int argc, char* argv[])
 {

@@ -1,4 +1,7 @@
+#ifndef EXERCISE_BASE_H
+#define EXERCISE_BASE_H
 #pragma once
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -36,3 +39,5 @@ public:
 
 	virtual ~ExerciseBase() = default;
 };
+
+#endif

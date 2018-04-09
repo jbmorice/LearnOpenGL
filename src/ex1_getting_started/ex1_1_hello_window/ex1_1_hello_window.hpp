@@ -1,3 +1,7 @@
+#ifndef EX1_1_HELLO_WINDOW
+#define EX1_1_HELLO_WINDOW
+#pragma once
+
 #pragma once
 #include "exercise_base.h"
 
@@ -26,3 +30,5 @@ public:
 	{
 	}
 };
+
+#endif

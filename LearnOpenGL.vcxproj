@@ -126,13 +126,13 @@
     <ClCompile Include="thirdparty\glad\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ex1_2_hello_triangle.hpp" />
-    <ClInclude Include="src\ex1_2_hello_triangle_1.hpp" />
-    <ClInclude Include="src\ex1_2_hello_triangle_2.hpp" />
-    <ClInclude Include="src\ex1_2_hello_triangle_3.hpp" />
-    <ClInclude Include="src\ex1_3_shaders.hpp" />
+    <ClInclude Include="src\ex1_getting_started\ex1_1_hello_window\ex1_1_hello_window.hpp" />
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle.hpp" />
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_1.hpp" />
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_2.hpp" />
+    <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_3.hpp" />
+    <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders.hpp" />
     <ClInclude Include="src\exercise_base.h" />
-    <ClInclude Include="src\ex1_1_hello_window.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

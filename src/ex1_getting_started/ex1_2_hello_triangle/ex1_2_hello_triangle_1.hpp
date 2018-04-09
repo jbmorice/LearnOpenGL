@@ -1,9 +1,12 @@
+#ifndef EX1_2_HELLO_TRIANGLE_1
+#define EX1_2_HELLO_TRIANGLE_1
 #pragma once
+
 #include "exercise_base.h"
 #include <string>
 #include <iostream>
 
-class Ex1_2_Hello_Triangle : public ExerciseBase
+class Ex1_2_Hello_Triangle_1 : public ExerciseBase
 {
 private:
 	unsigned int m_shaderProgram;
@@ -16,7 +19,6 @@ private:
 		// Prepare the shaders
 		// ==============================
 
-		// Create an OpenGL object for the vertex shader
 		unsigned int vertexShader;
 		vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -30,15 +32,13 @@ private:
 			}\n\
 		";
 
-		// Attach our source and compile
 		glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
 		glCompileShader(vertexShader);
 
-		// Check for compilation errors
 		int vertexShaderCompRes;
 		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &vertexShaderCompRes);
 
-		if(!vertexShaderCompRes)
+		if (!vertexShaderCompRes)
 		{
 			char vertexShaderInfoLog[512];
 			glGetShaderInfoLog(vertexShader, 512, nullptr, vertexShaderInfoLog);
@@ -47,7 +47,6 @@ private:
 			exit(EXIT_FAILURE);
 		}
 
-		// Same for the fragment shader
 		unsigned int fragmentShader;
 		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -64,7 +63,6 @@ private:
 		glShaderSource(fragmentShader, 1, &m_fragmentShaderSource, nullptr);
 		glCompileShader(fragmentShader);
 
-		// Check for compilation errors
 		int fragmentShaderCompRes;
 		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &fragmentShaderCompRes);
 
@@ -77,13 +75,11 @@ private:
 			exit(EXIT_FAILURE);
 		}
 
-		// Create a shader program and link our shaders
 		m_shaderProgram = glCreateProgram();
 		glAttachShader(m_shaderProgram, vertexShader);
 		glAttachShader(m_shaderProgram, fragmentShader);
 		glLinkProgram(m_shaderProgram);
 
-		// Check for linking errors
 		int shaderProgramLinkRes;
 		glGetProgramiv(m_shaderProgram, GL_LINK_STATUS, &shaderProgramLinkRes);
 
@@ -96,68 +92,47 @@ private:
 			exit(EXIT_FAILURE);
 		}
 
-		// OpenGL shader objects are not needed anymore and can be destroyed
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
 
 		// Prepare the vertex data and its attributes
 		// ==============================
-		// Create an OpenGL Vertex Array Object that will store the description of the content of
-		// our Vertex Buffer Object
 		glGenVertexArrays(1, &m_VAO);
-		// Bind our Vertex Array Object
 		glBindVertexArray(m_VAO);
 
-		// Create an OpenGL buffer object to use as our Vertex Buffer Object
 		glGenBuffers(1, &m_VBO);
-		// Bind our Vertex Buffer Object to the GL_ARRAY_BUFFER slot
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-		float vertices[9] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f,  0.5f, 0.0f
+		// Added vertices
+		float vertices[18] = {
+			-1.0f, -0.5f, 0.0f,
+			-0.0f, -0.5f, 0.0f,
+			-0.5f, 0.5f,  0.0f,
+
+			0.0f, -0.5f, 0.0f,
+			1.0f, -0.5f, 0.0f,
+			0.5f, 0.5f, 0.0f
 		};
 
-		// Send the vertices data to this slot
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		// Describe the vertex attributes (how the content of our vertex buffer is organized)
-		//		index	   : 0 to bind it to "layout (location = 0)"
-		//		size	   : 3 values per vertex (since it is a "vec3")
-		//		type	   : of type float (since a "vec3" contains floats)
-		//		normalized : do not normalize the data
-		//		stride	   : space between vertices is the size of 3 floats
-		//		offset	   : offset to where the data begins in the buffer
-		//
-		// This will register the Buffer Object currently bound to the GL_ARRAY_BUFFER slot as
-		// associated to this Vertex Array Object
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*) 0);
-		// Activate the vertex attribute we decribed fo "layout (location = 0)"
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 		glEnableVertexAttribArray(0);
 
-		// Unbind the Vertex Buffer Object and the Vertex Array Object to avoid accidentally
-		// modifying them later
 		glBindBuffer(0, GL_ARRAY_BUFFER);
 		glBindVertexArray(0);
 	}
 
 	void render() override
 	{
-		// Clear our color buffer to black before drawing
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Activate the shader program
 		glUseProgram(m_shaderProgram);
-		// Bind the VAO (and its subsequent VBO)
 		glBindVertexArray(m_VAO);
-		// (This could have been done only once during the preparation since we only have one
-		// buffer to draw but for normal applications it will have to be done for every different
-		// object to draw)
 
-		// The draw call
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// Draw 3 more vertices
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
 
 	void cleanup() override
@@ -168,8 +143,10 @@ private:
 	}
 
 public:
-	Ex1_2_Hello_Triangle()
-		: ExerciseBase("Exercise 1.2 - Hello Triangle")
+	Ex1_2_Hello_Triangle_1()
+		: ExerciseBase("Exercise 1.2.1 - Hello Triangle (two triangles, one buffer)")
 	{
 	}
 };
+
+#endif
