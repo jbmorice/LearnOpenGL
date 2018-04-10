@@ -1,6 +1,8 @@
 #include "exercise_base.h"
 #include <iostream>
-#include <glad/glad.h>
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "../thirdparty/stb/stb_image.h"
 
 void ExerciseBase::gflwErrorCallback(int error, const char* description)
 {

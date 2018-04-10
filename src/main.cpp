@@ -6,6 +6,7 @@
 #include "ex1_getting_started/ex1_2_hello_triangle/ex1_2_hello_triangle_3.hpp"
 #include "ex1_getting_started/ex1_3_shaders/ex1_3_shaders.hpp"
 #include "ex1_getting_started/ex1_3_shaders/ex1_3_shaders_1.hpp"
+#include "ex1_getting_started/ex1_4_textures/ex1_4_textures.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -16,8 +17,9 @@ int main(int argc, char* argv[])
 	Ex1_2_Hello_Triangle_3 ex1_2_3;
 	Ex1_3_Shaders ex1_3;
 	Ex1_3_Shaders_1 ex1_3_1;
+	Ex1_4_Textures ex1_4;
 
-	ExerciseBase* currentExercise = &ex1_3_1;
+	ExerciseBase* currentExercise = &ex1_4;
 
 	currentExercise->run();
 }

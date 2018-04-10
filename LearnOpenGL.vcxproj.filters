@@ -25,6 +25,12 @@
     <Filter Include="Header Files\ex1_getting_started\ex1_3_shaders">
       <UniqueIdentifier>{98d825dd-8137-4464-a292-a2f69938188d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\thirdparty">
+      <UniqueIdentifier>{70307712-cd1d-4575-856b-63fab75bd32d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ex1_getting_started\ex1_4_textures">
+      <UniqueIdentifier>{bcb608f6-2d64-4d29-9075-05b15ce309b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thirdparty\glad\src\glad.c">
@@ -67,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders_1.hpp">
       <Filter>Header Files\ex1_getting_started\ex1_3_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\stb\stb_image.h">
+      <Filter>Header Files\thirdparty</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex1_getting_started\ex1_4_textures\ex1_4_textures.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_4_textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
