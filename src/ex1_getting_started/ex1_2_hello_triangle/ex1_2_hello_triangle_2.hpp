@@ -13,6 +13,7 @@ private:
 
 	unsigned int m_VAOs[2];
 	unsigned int m_VBOs[2];
+	unsigned int m_EBO;
 
 	void prepare() override
 	{
@@ -99,11 +100,11 @@ private:
 		// ==============================
 
 		// First triangle
-		glGenVertexArrays(1, &m_VAOs[1]);
-		glBindVertexArray(m_VAOs[1]);
+		glGenVertexArrays(1, &m_VAOs[0]);
+		glBindVertexArray(m_VAOs[0]);
 
-		glGenBuffers(1, &m_VBOs[1]);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBOs[1]);
+		glGenBuffers(1, &m_VBOs[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBOs[0]);
 
 		float vertices1[9] = {
 			-1.0f, -0.5f, 0.0f,
@@ -113,6 +114,13 @@ private:
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices1), vertices1, GL_STATIC_DRAW);
 
+		glGenBuffers(1, &m_EBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
+		int elements[6] = { 0, 1, 2 };
+
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 		glEnableVertexAttribArray(0);
 
@@ -120,11 +128,11 @@ private:
 		glBindVertexArray(0);
 
 		// Second triangle
-		glGenVertexArrays(1, &m_VAOs[2]);
-		glBindVertexArray(m_VAOs[2]);
+		glGenVertexArrays(1, &m_VAOs[1]);
+		glBindVertexArray(m_VAOs[1]);
 
-		glGenBuffers(1, &m_VBOs[2]);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBOs[2]);
+		glGenBuffers(1, &m_VBOs[1]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBOs[1]);
 
 		float vertices2[9] = {
 			0.0f, -0.5f, 0.0f,
@@ -134,10 +142,13 @@ private:
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(0, GL_ARRAY_BUFFER);
+		glBindBuffer(0, GL_ELEMENT_ARRAY_BUFFER);
 		glBindVertexArray(0);
 	}
 
@@ -149,12 +160,12 @@ private:
 		glUseProgram(m_shaderProgram);
 
 		// Bind and draw first triangle
-		glBindVertexArray(m_VAOs[1]);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(m_VAOs[0]);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
 		// And second
-		glBindVertexArray(m_VAOs[2]);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(m_VAOs[1]);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 	}
 
 	void cleanup() override
@@ -162,6 +173,7 @@ private:
 		glDeleteProgram(m_shaderProgram);
 		glDeleteVertexArrays(2, m_VAOs);
 		glDeleteBuffers(2, m_VBOs);
+		glDeleteBuffers(1, &m_EBO);
 	}
 
 public:

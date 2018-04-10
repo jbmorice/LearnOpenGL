@@ -15,6 +15,7 @@ private:
 
 	unsigned int m_VAOs[2];
 	unsigned int m_VBOs[2];
+	unsigned int m_EBO;
 
 	void prepare() override
 	{
@@ -282,6 +283,13 @@ private:
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices1), vertices1, GL_STATIC_DRAW);
 
+		glGenBuffers(1, &m_EBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
+		int elements[3] = { 0, 1, 2 };
+
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 		glEnableVertexAttribArray(0);
 
@@ -306,6 +314,8 @@ private:
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
 		// Remember to change the stride
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*) 0);
 		glEnableVertexAttribArray(0);
@@ -314,6 +324,7 @@ private:
 		glEnableVertexAttribArray(1);
 
 		glBindBuffer(0, GL_ARRAY_BUFFER);
+		glBindBuffer(0, GL_ELEMENT_ARRAY_BUFFER);
 		glBindVertexArray(0);
 
 		// Set the first shader as default
@@ -351,7 +362,7 @@ private:
 			glBindVertexArray(m_VAOs[0]);
 		}
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 	}
 
 	void cleanup() override
@@ -363,6 +374,7 @@ private:
 
 		glDeleteVertexArrays(2, m_VAOs);
 		glDeleteBuffers(2, m_VBOs);
+		glDeleteBuffers(1, &m_EBO);
 	}
 
 	void processInput(GLFWwindow* window) override

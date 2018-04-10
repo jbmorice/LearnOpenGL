@@ -13,6 +13,7 @@ private:
 
 	unsigned int m_VAO;
 	unsigned int m_VBO;
+	unsigned int m_EBO;
 
 	void prepare() override
 	{
@@ -116,10 +117,18 @@ private:
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+		glGenBuffers(1, &m_EBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
+		int elements[6] = { 0, 1, 2, 3, 4, 5 };
+
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(0, GL_ARRAY_BUFFER);
+		glBindBuffer(0, GL_ELEMENT_ARRAY_BUFFER);
 		glBindVertexArray(0);
 	}
 
@@ -132,7 +141,8 @@ private:
 		glBindVertexArray(m_VAO);
 
 		// Draw 3 more vertices
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
 	}
 
 	void cleanup() override
@@ -140,6 +150,7 @@ private:
 		glDeleteProgram(m_shaderProgram);
 		glDeleteVertexArrays(1, &m_VAO);
 		glDeleteBuffers(1, &m_VBO);
+		glDeleteBuffers(1, &m_EBO);
 	}
 
 public:

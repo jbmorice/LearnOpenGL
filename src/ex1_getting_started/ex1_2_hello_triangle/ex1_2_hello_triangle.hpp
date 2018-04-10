@@ -13,6 +13,7 @@ private:
 
 	unsigned int m_VAO;
 	unsigned int m_VBO;
+	unsigned int m_EBO;
 
 	void prepare() override
 	{
@@ -125,6 +126,17 @@ private:
 		// Send the vertices data to this slot
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+		// Create en OpenGL Element Buffer Object that will store the indices of the the vertices
+		// to draw from the VBO
+		glGenBuffers(1, &m_EBO);
+		// Bind it to upload data
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
+		int elements[3] = { 0, 1, 2 };
+
+
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+
 		// Describe the vertex attributes (how the content of our vertex buffer is organized)
 		//		index	   : 0 to bind it to "layout (location = 0)"
 		//		size	   : 3 values per vertex (since it is a "vec3")
@@ -133,15 +145,17 @@ private:
 		//		stride	   : space between vertices is the size of 3 floats
 		//		offset	   : offset to where the data begins in the buffer
 		//
-		// This will register the Buffer Object currently bound to the GL_ARRAY_BUFFER slot as
-		// associated to this Vertex Array Object
+		// This will register the VBO currently bound to the GL_ARRAY_BUFFER slot and the EBO
+		// currently bound to the GL_ELEMENT_ARRAY_BUFFER slot as associated to this Vertex
+		// Array Object. Thus, we will only have to bind the VAO to issue a draw call.
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*) 0);
 		// Activate the vertex attribute we decribed fo "layout (location = 0)"
 		glEnableVertexAttribArray(0);
 
-		// Unbind the Vertex Buffer Object and the Vertex Array Object to avoid accidentally
+		// Unbind the current Buffer Objects and the Vertex Array Object to avoid accidentally
 		// modifying them later
 		glBindBuffer(0, GL_ARRAY_BUFFER);
+		glBindBuffer(0, GL_ELEMENT_ARRAY_BUFFER);
 		glBindVertexArray(0);
 	}
 
@@ -160,7 +174,10 @@ private:
 		// object to draw)
 
 		// The draw call
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+
+		// Unbind VAO to avoid accidentally modifying it later
+		glBindVertexArray(0);
 	}
 
 	void cleanup() override
@@ -168,6 +185,7 @@ private:
 		glDeleteProgram(m_shaderProgram);
 		glDeleteVertexArrays(1, &m_VAO);
 		glDeleteBuffers(1, &m_VBO);
+		glDeleteBuffers(1, &m_EBO);
 	}
 
 public:
