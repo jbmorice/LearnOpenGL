@@ -36,6 +36,9 @@
     <ClCompile Include="src\exercise_base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\helper\shader_program.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\exercise_base.h">
@@ -57,6 +60,12 @@
       <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders.hpp">
+      <Filter>Header Files\ex1_getting_started\ex1_3_shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\helper\shader_program.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders_1.hpp">
       <Filter>Header Files\ex1_getting_started\ex1_3_shaders</Filter>
     </ClInclude>
   </ItemGroup>

@@ -296,7 +296,7 @@ private:
 		glBindBuffer(0, GL_ARRAY_BUFFER);
 		glBindVertexArray(0);
 
-		// VAO for the first two shader programs
+		// VAO for the third shader program
 		// ---------------
 
 		glBindVertexArray(m_VAOs[1]);
