@@ -5,6 +5,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <iostream>
+
+#include "../thirdparty/stb/stb_image.h"
+
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
+
 class ExerciseBase
 {
 protected:
@@ -22,7 +30,7 @@ protected:
 	virtual void processInput(GLFWwindow* window);
 
 	virtual void prepare() = 0;
-	virtual void render() = 0;
+	virtual void render(float a_deltaTime) = 0;
 	virtual void cleanup() = 0;
 
 public:

@@ -15,12 +15,14 @@ public:
 	ShaderProgram() = default;
 	ShaderProgram(const char* a_vertexShaderCodePath, const char* a_fragmentShaderCodePath);
 
-	void compile();
-	void use();
+	unsigned int getHandle() const;
 
 	void setBool(const char* a_name, bool a_value);
 	void setInt(const char* a_name, int a_value);
 	void setFloat(const char* a_name, float a_value);
+
+	void compile();
+	void use();
 
 	void release();
 };

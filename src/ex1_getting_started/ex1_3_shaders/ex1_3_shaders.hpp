@@ -3,7 +3,6 @@
 #pragma once
 
 #include "exercise_base.h"
-#include <string>
 #include <iostream>
 #include <complex>
 
@@ -331,7 +330,7 @@ private:
 		m_currentShaderProgram = m_shaderPrograms[0];
 	}
 
-	void render() override
+	void render(float a_deltaTime) override
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);

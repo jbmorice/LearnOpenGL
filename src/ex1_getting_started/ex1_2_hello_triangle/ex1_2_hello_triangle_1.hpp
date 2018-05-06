@@ -132,7 +132,7 @@ private:
 		glBindVertexArray(0);
 	}
 
-	void render() override
+	void render(float a_deltaTime) override
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);

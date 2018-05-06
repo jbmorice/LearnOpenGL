@@ -13,23 +13,26 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\ex1_getting_started">
-      <UniqueIdentifier>{27cb38f5-8b7a-4e21-95fc-e714fba2b23e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ex1_getting_started\ex1_1_hello_window">
-      <UniqueIdentifier>{ed70a8e8-78e4-41c0-ba4f-0c9bcd731bfa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ex1_getting_started\ex1_2_hello_triangle">
-      <UniqueIdentifier>{67188316-c851-4c65-aa14-5ec8b70396d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ex1_getting_started\ex1_3_shaders">
-      <UniqueIdentifier>{98d825dd-8137-4464-a292-a2f69938188d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\thirdparty">
       <UniqueIdentifier>{70307712-cd1d-4575-856b-63fab75bd32d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ex1_getting_started\ex1_4_textures">
+    <Filter Include="Source Files\ex1_getting_started">
+      <UniqueIdentifier>{27cb38f5-8b7a-4e21-95fc-e714fba2b23e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ex1_getting_started\ex1_1_hello_window">
+      <UniqueIdentifier>{ed70a8e8-78e4-41c0-ba4f-0c9bcd731bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ex1_getting_started\ex1_2_hello_triangle">
+      <UniqueIdentifier>{67188316-c851-4c65-aa14-5ec8b70396d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ex1_getting_started\ex1_3_shaders">
+      <UniqueIdentifier>{98d825dd-8137-4464-a292-a2f69938188d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ex1_getting_started\ex1_4_textures">
       <UniqueIdentifier>{bcb608f6-2d64-4d29-9075-05b15ce309b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ex1_getting_started\ex1_5_transformations">
+      <UniqueIdentifier>{691b3838-a18a-446d-a1b9-765877b7d175}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,34 +54,37 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_1_hello_window\ex1_1_hello_window.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_1_hello_window</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_1_hello_window</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_1.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_2.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_2_hello_triangle\ex1_2_hello_triangle_3.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_2_hello_triangle</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_3_shaders</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_3_shaders</Filter>
     </ClInclude>
     <ClInclude Include="src\helper\shader_program.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders_1.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_3_shaders</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_3_shaders</Filter>
     </ClInclude>
     <ClInclude Include="thirdparty\stb\stb_image.h">
       <Filter>Header Files\thirdparty</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_4_textures\ex1_4_textures.hpp">
-      <Filter>Header Files\ex1_getting_started\ex1_4_textures</Filter>
+      <Filter>Source Files\ex1_getting_started\ex1_4_textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex1_getting_started\ex1_5_transformations\ex1_5_transformations.hpp">
+      <Filter>Source Files\ex1_getting_started\ex1_5_transformations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

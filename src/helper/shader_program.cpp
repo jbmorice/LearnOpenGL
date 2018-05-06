@@ -11,6 +11,11 @@ ShaderProgram::ShaderProgram(const char* a_vertexShaderCodePath, const char* a_f
 	compile();
 }
 
+unsigned int ShaderProgram::getHandle() const
+{
+	return m_shaderProgramHandle;
+}
+
 void ShaderProgram::compile()
 {
 	char result[MAX_PATH];

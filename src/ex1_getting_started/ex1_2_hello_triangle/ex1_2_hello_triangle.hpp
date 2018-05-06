@@ -159,7 +159,7 @@ private:
 		glBindVertexArray(0);
 	}
 
-	void render() override
+	void render(float a_deltaTime) override
 	{
 		// Clear our color buffer to black before drawing
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

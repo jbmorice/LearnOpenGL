@@ -55,9 +55,13 @@ private:
 		glBindVertexArray(0);
 	}
 
-	void render() override
+	void render(float a_deltaTime) override
 	{
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		m_shaderProgram.use();
+
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 	}

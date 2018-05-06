@@ -4,7 +4,6 @@
 
 #include "../../exercise_base.h"
 #include "../../helper/shader_program.h"
-#include "../../thirdparty/stb/stb_image.h"
 
 class Ex1_4_Textures : public ExerciseBase
 {
@@ -142,8 +141,11 @@ private:
 		stbi_image_free(data);
 	}
 
-	void render() override
+	void render(float a_deltaTime) override
 	{
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		// Bind the textures to their units
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_crateTexture);

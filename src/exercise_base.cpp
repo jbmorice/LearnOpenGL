@@ -1,5 +1,4 @@
 #include "exercise_base.h"
-#include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "../thirdparty/stb/stb_image.h"
@@ -61,17 +60,23 @@ void ExerciseBase::run()
 	glfwSetFramebufferSizeCallback(m_window, glfwFramebufferSizeCallback);
 
 	prepare();
+
+	float oldTime = 0.0f;
 	
 	// Start the render loop (won't stop running unless something tries to close the GLFW window)
 	while (!glfwWindowShouldClose(m_window))
 	{
+		float currentTime = (float) glfwGetTime();
+		float deltaTime = currentTime - oldTime;
+		oldTime = currentTime;
+
 		// Handle inputs
 		processInput(m_window);
 
 		// Rendering happens here
 		// =====
 
-		render();
+		render(deltaTime);
 
 		// =====
 		glfwSwapBuffers(m_window); // Swap the back and front buffers
