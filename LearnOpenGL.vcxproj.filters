@@ -34,6 +34,9 @@
     <Filter Include="Source Files\ex1_getting_started\ex1_5_transformations">
       <UniqueIdentifier>{691b3838-a18a-446d-a1b9-765877b7d175}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ex1_getting_started\ex1_6_coordinate_systems">
+      <UniqueIdentifier>{78684507-ad71-46d9-bf5a-a098de16ceaf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thirdparty\glad\src\glad.c">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_5_transformations\ex1_5_transformations.hpp">
       <Filter>Source Files\ex1_getting_started\ex1_5_transformations</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex1_getting_started\ex1_6_coordinate_systems\ex1_6_coordinate_systems.hpp">
+      <Filter>Source Files\ex1_getting_started\ex1_6_coordinate_systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

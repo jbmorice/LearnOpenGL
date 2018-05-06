@@ -1,11 +1,11 @@
-#ifndef EX1_5_TRANSFORMATIONS
-#define EX1_5_TRANSFORMATIONS
+#ifndef EX1_6_COORDINATE_SYSTEMS
+#define EX1_6_COORDINATE_SYSTEMS
 #pragma once
 
 #include "../../exercise_base.h"
 #include "../../helper/shader_program.h"
 
-class Ex1_5_Transformations : public ExerciseBase
+class Ex1_6_Coordinate_Systems : public ExerciseBase
 {
 private:
 	unsigned int m_crateTexture;
@@ -15,15 +15,18 @@ private:
 
 	unsigned int m_VAO;
 	unsigned int m_VBO;
-	unsigned int m_EBO;
 
-	glm::mat4x4 m_transform;
+	glm::mat4x4 m_model;
+	glm::mat4x4 m_view;
+	glm::mat4x4 m_projection;
+
+	std::vector<glm::vec3> m_cubePositions;
 
 	void prepare() override
 	{
 		// Prepare the shader
 		// ==============================
-		m_shaderProgram = ShaderProgram("./src/ex1_getting_started/ex1_5_transformations/shaders/shader.vert", "./src/ex1_getting_started/ex1_5_transformations/shaders/shader.frag");
+		m_shaderProgram = ShaderProgram("./src/ex1_getting_started/ex1_6_coordinate_systems/shaders/shader.vert", "./src/ex1_getting_started/ex1_6_coordinate_systems/shaders/shader.frag");
 
 		// Asign texture samplers to texture units
 		m_shaderProgram.use();
@@ -40,28 +43,56 @@ private:
 		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
 		float vertices[] = {
-			0.5f,  0.5f, 0.0f,		1.0f, 0.0f, 0.0f,	1.0f, 1.0f,
-			0.5f, -0.5f, 0.0f,		0.0f, 1.0f, 0.0f,	1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,		0.0f, 0.0f, 1.0f,	0.0f, 0.0f,
-			-0.5f,  0.5f, 0.0f,		1.0f, 1.0f, 0.0f,	0.0f, 1.0f
+			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+			-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+			-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		glGenBuffers(1, &m_EBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-
-		unsigned int elements[] = { 0, 1, 3, 1, 2, 3 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 3));
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(sizeof(float) * 3));
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(sizeof(float) * 6));
-		glEnableVertexAttribArray(2);
 
 		glBindBuffer(0, GL_ARRAY_BUFFER);
-		glBindBuffer(0, GL_ELEMENT_ARRAY_BUFFER);
 		glBindVertexArray(0);
 
 		// Prepare the textures
@@ -142,25 +173,40 @@ private:
 
 		stbi_image_free(data);
 
-		// Transformations
+		// Matrices
 		// ==============================
-		m_transform = glm::mat4x4(1.0f); // Initialize as identity matrix
-		m_transform = glm::translate(m_transform, glm::vec3(0.5f, -0.5f, 0.0f));
-		m_transform = glm::rotate(m_transform, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		m_transform = glm::scale(m_transform, glm::vec3(0.5f, 0.5f, 0.5f));
+		m_view = glm::mat4x4(1.0f);
+		m_view = glm::translate(m_view, glm::vec3(0.0f, 0.0f, -3.0f));
+		m_projection = glm::mat4x4(1.0f);
+		m_projection = glm::perspective(glm::radians(45.0f), (float) getWindowWidth() / (float) getWindowHeight(), 0.1f, 100.0f);
+
+		m_cubePositions = {
+			glm::vec3(0.0f,  0.0f,  0.0f),
+			glm::vec3(2.0f,  5.0f, -15.0f),
+			glm::vec3(-1.5f, -2.2f, -2.5f),
+			glm::vec3(-3.8f, -2.0f, -12.3f),
+			glm::vec3(2.4f, -0.4f, -3.5f),
+			glm::vec3(-1.7f,  3.0f, -7.5f),
+			glm::vec3(1.3f, -2.0f, -2.5f),
+			glm::vec3(1.5f,  2.0f, -2.5f),
+			glm::vec3(1.5f,  0.2f, -1.5f),
+			glm::vec3(-1.3f,  1.0f, -1.5f)
+		};
 
 		// Assign the matrix to the shader uniform (not really useful since done every render loop)
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "transform"), 1, GL_FALSE, glm::value_ptr(m_transform));
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "model"), 1, GL_FALSE, glm::value_ptr(m_model));
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "view"), 1, GL_FALSE, glm::value_ptr(m_view));
+		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
+
+		// Enable depth testing
+		glEnable(GL_DEPTH_TEST);
+
 	}
 
 	void render(float a_deltaTime) override
 	{
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Update transform
-		m_transform = glm::rotate(m_transform, a_deltaTime, glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "transform"), 1, GL_FALSE, glm::value_ptr(m_transform));
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Bind the textures to their units
 		glActiveTexture(GL_TEXTURE0);
@@ -168,10 +214,23 @@ private:
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_smileyTexture);
 
-		// Render
 		m_shaderProgram.use();
 		glBindVertexArray(m_VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		for(int i = 0; i < m_cubePositions.size(); i++)
+		{
+			// Update matrices
+			m_model = glm::mat4x4(1.0f);
+			m_model = glm::translate(m_model, m_cubePositions[i]);
+			m_model = glm::rotate(m_model, i * glm::radians(20.0f), glm::vec3(1.0f, 0.3f, 0.5f));
+
+			glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "model"), 1, GL_FALSE, glm::value_ptr(m_model));
+			glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "view"), 1, GL_FALSE, glm::value_ptr(m_view));
+			glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
+
+			// Render
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 	}
 
 	void cleanup() override
@@ -179,14 +238,13 @@ private:
 		m_shaderProgram.release();
 		glDeleteVertexArrays(1, &m_VAO);
 		glDeleteBuffers(1, &m_VBO);
-		glDeleteBuffers(1, &m_EBO);
 		glDeleteTextures(1, &m_crateTexture);
 		glDeleteTextures(1, &m_smileyTexture);
 	}
 
 public:
-	Ex1_5_Transformations()
-		: ExerciseBase("Exercise 1.5 - Transformations")
+	Ex1_6_Coordinate_Systems()
+		: ExerciseBase("Exercise 1.6 - Coordinate Systems")
 	{
 	}
 };

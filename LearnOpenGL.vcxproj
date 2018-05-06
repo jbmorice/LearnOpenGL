@@ -136,6 +136,7 @@
     <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders_1.hpp" />
     <ClInclude Include="src\ex1_getting_started\ex1_4_textures\ex1_4_textures.hpp" />
     <ClInclude Include="src\ex1_getting_started\ex1_5_transformations\ex1_5_transformations.hpp" />
+    <ClInclude Include="src\ex1_getting_started\ex1_6_coordinate_systems\ex1_6_coordinate_systems.hpp" />
     <ClInclude Include="src\exercise_base.h" />
     <ClInclude Include="src\helper\shader_program.h" />
     <ClInclude Include="thirdparty\stb\stb_image.h" />

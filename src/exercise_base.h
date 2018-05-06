@@ -43,6 +43,10 @@ public:
 	{
 	}
 
+	const char* getWindowName() { return m_windowName; }
+	int getWindowWidth() { return m_windowWidth; }
+	int getWindowHeight() { return m_windowHeight; }
+
 	void run();
 
 	virtual ~ExerciseBase() = default;
