@@ -4,10 +4,17 @@
 #include <fstream>
 #include <sstream>
 
-ShaderProgram::ShaderProgram(const char * a_vertexShaderCodePath, const char * a_fragmentShaderCodePath)
+ShaderProgram::ShaderProgram(const char* a_vertexShaderCodePath, const char* a_fragmentShaderCodePath) :
+	m_vertexShaderCodePath(std::string(a_vertexShaderCodePath)),
+	m_fragmentShaderCodePath(std::string(a_fragmentShaderCodePath))
+{
+	compile();
+}
+
+void ShaderProgram::compile()
 {
 	char result[MAX_PATH];
-	std::cout << std::string(result, GetModuleFileName(NULL, result, MAX_PATH)) << std::endl;
+	std::cout << std::string(result, GetModuleFileName(nullptr, result, MAX_PATH)) << std::endl;
 
 	// Retrieve shader code from files
 	std::string vertexShaderCode;
@@ -21,8 +28,8 @@ ShaderProgram::ShaderProgram(const char * a_vertexShaderCodePath, const char * a
 	try
 	{
 		// Open files
-		vertexShaderFile.open(a_vertexShaderCodePath);
-		fragmentShaderFile.open(a_fragmentShaderCodePath);
+		vertexShaderFile.open(m_vertexShaderCodePath);
+		fragmentShaderFile.open(m_fragmentShaderCodePath);
 		// Read their content into streams
 		std::stringstream vertexShaderStream;
 		std::stringstream fragmentShaderStream;

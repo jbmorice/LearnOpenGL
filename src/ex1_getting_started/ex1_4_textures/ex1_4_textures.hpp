@@ -10,6 +10,7 @@ class Ex1_4_Textures : public ExerciseBase
 {
 private:
 	unsigned int m_crateTexture;
+	unsigned int m_smileyTexture;
 
 	ShaderProgram m_shaderProgram;
 
@@ -22,6 +23,11 @@ private:
 		// Prepare the shader
 		// ==============================
 		m_shaderProgram = ShaderProgram("./src/ex1_getting_started/ex1_4_textures/shaders/shader.vert", "./src/ex1_getting_started/ex1_4_textures/shaders/shader.frag");
+
+		// Asign texture samplers to texture units
+		m_shaderProgram.use();
+		m_shaderProgram.setInt("mainTexture", 0);
+		m_shaderProgram.setInt("secondaryTexture", 1);
 
 		// Prepare the buffers
 		// ==============================
@@ -57,8 +63,9 @@ private:
 		glBindBuffer(0, GL_ELEMENT_ARRAY_BUFFER);
 		glBindVertexArray(0);
 
-		// Prepare the texture
+		// Prepare the textures
 		// ==============================
+		// Crate texture
 		int width;
 		int height;
 		int nbChannels;
@@ -81,13 +88,50 @@ private:
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		glTexImage2D(GL_TEXTURE_2D,			// Target slot
+		glTexImage2D(GL_TEXTURE_2D,	// Target slot
 			0,						// Mipmap level
-			GL_RGB,				// Storage format on GPU
+			GL_RGB,					// Storage format on GPU
 			width,
 			height,
 			0,						// Should always be 0
-			GL_RGB,				// Source format
+			GL_RGB,					// Source format
+			GL_UNSIGNED_BYTE,		// Source datatype
+			data
+		);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, 0); // Unbind for safety (not useful here)
+
+		stbi_image_free(data);
+
+		// Smiley texture
+		stbi_set_flip_vertically_on_load(true);
+		data = stbi_load("./resources/awesomeface.png", &width, &height, &nbChannels, 0);
+
+		if (!data)
+		{
+			std::cout << "Failed to load image" << std::endl;
+			std::cin.ignore();
+			return;
+		}
+
+		glGenTextures(1, &m_smileyTexture); // Generate OpenGL m_crateTexture handle
+		glBindTexture(GL_TEXTURE_2D, m_smileyTexture); // Bind it to a slot
+
+		// Set the texture wrapping parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Set texture wrapping to GL_REPEAT (default wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// Set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glTexImage2D(GL_TEXTURE_2D,	// Target slot
+			0,						// Mipmap level
+			GL_RGB,					// Storage format on GPU
+			width,
+			height,
+			0,						// Should always be 0
+			GL_RGBA,				// Source format
 			GL_UNSIGNED_BYTE,		// Source datatype
 			data
 		);
@@ -100,7 +144,13 @@ private:
 
 	void render() override
 	{
+		// Bind the textures to their units
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_crateTexture);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, m_smileyTexture);
+
+		// Render
 		m_shaderProgram.use();
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -113,11 +163,12 @@ private:
 		glDeleteBuffers(1, &m_VBO);
 		glDeleteBuffers(1, &m_EBO);
 		glDeleteTextures(1, &m_crateTexture);
+		glDeleteTextures(1, &m_smileyTexture);
 	}
 
 public:
 	Ex1_4_Textures()
-		: ExerciseBase("Exercise 1.3.1 - Shaders")
+		: ExerciseBase("Exercise 1.4 - Textures")
 	{
 	}
 };
