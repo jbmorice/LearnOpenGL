@@ -37,6 +37,15 @@
     <Filter Include="Source Files\ex1_getting_started\ex1_6_coordinate_systems">
       <UniqueIdentifier>{78684507-ad71-46d9-bf5a-a098de16ceaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\thirdparty">
+      <UniqueIdentifier>{022bdfe9-b3fa-4a54-b7c8-e26a0b74070e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\thirdparty\dear_imgui">
+      <UniqueIdentifier>{e652c78a-cc3b-488e-b69b-8310c0ed8a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\thirdparty\dear_imgui">
+      <UniqueIdentifier>{03d76781-2526-41f0-96a2-b728a6913097}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thirdparty\glad\src\glad.c">
@@ -50,6 +59,18 @@
     </ClCompile>
     <ClCompile Include="src\helper\shader_program.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\dear_imgui\imgui.cpp">
+      <Filter>Source Files\thirdparty\dear_imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\dear_imgui\imgui_impl_glfw_gl3.cpp">
+      <Filter>Source Files\thirdparty\dear_imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\dear_imgui\imgui_demo.cpp">
+      <Filter>Source Files\thirdparty\dear_imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\dear_imgui\imgui_draw.cpp">
+      <Filter>Source Files\thirdparty\dear_imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +112,27 @@
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_6_coordinate_systems\ex1_6_coordinate_systems.hpp">
       <Filter>Source Files\ex1_getting_started\ex1_6_coordinate_systems</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\dear_imgui\imgui_impl_glfw_gl3.h">
+      <Filter>Header Files\thirdparty\dear_imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\dear_imgui\imgui.h">
+      <Filter>Header Files\thirdparty\dear_imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\dear_imgui\imconfig.h">
+      <Filter>Header Files\thirdparty\dear_imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\dear_imgui\imgui_internal.h">
+      <Filter>Header Files\thirdparty\dear_imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\dear_imgui\stb_rect_pack.h">
+      <Filter>Header Files\thirdparty\dear_imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\dear_imgui\stb_textedit.h">
+      <Filter>Header Files\thirdparty\dear_imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\dear_imgui\stb_truetype.h">
+      <Filter>Header Files\thirdparty\dear_imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,6 +13,11 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 
+#ifdef USE_DEAR_IMGUI
+#include "../thirdparty/dear_imgui/imgui.h"
+#include "../thirdparty/dear_imgui/imgui_impl_glfw_gl3.h"
+#endif
+
 class ExerciseBase
 {
 protected:

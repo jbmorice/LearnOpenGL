@@ -59,6 +59,13 @@ void ExerciseBase::run()
 	// Set the callback function to resize the viewport with the GLFW window
 	glfwSetFramebufferSizeCallback(m_window, glfwFramebufferSizeCallback);
 
+#ifdef USE_DEAR_IMGUI
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui_ImplGlfwGL3_Init(m_window, true);
+	ImGui::StyleColorsDark();
+#endif
+
 	prepare();
 
 	float oldTime = 0.0f;
@@ -66,6 +73,12 @@ void ExerciseBase::run()
 	// Start the render loop (won't stop running unless something tries to close the GLFW window)
 	while (!glfwWindowShouldClose(m_window))
 	{
+		glfwPollEvents(); // Check if any event has been triggered and call the according callbacks
+
+#ifdef USE_DEAR_IMGUI
+		ImGui_ImplGlfwGL3_NewFrame();
+#endif
+
 		float currentTime = (float) glfwGetTime();
 		float deltaTime = currentTime - oldTime;
 		oldTime = currentTime;
@@ -78,12 +91,21 @@ void ExerciseBase::run()
 
 		render(deltaTime);
 
+#ifdef USE_DEAR_IMGUI
+		ImGui::Render();
+		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+#endif
+
 		// =====
 		glfwSwapBuffers(m_window); // Swap the back and front buffers
-		glfwPollEvents(); // Check if any event has been triggered and call the according callbacks
 	}
 
 	cleanup();
+
+#ifdef USE_DEAR_IMGUI
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
+#endif
 
 	// Properly stop GLFW
 	glfwTerminate();
