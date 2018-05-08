@@ -25,6 +25,8 @@ protected:
 	int m_windowWidth, m_windowHeight;
 	const char* m_windowName;
 
+	float m_deltaTime;
+
 	// Callback function to print GLFW errors in console
 	static void gflwErrorCallback(int error, const char* description);
 

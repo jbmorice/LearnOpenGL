@@ -3,6 +3,9 @@
 #pragma once
 
 #include <string>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 class ShaderProgram
 {
@@ -20,6 +23,7 @@ public:
 	void setBool(const char* a_name, bool a_value);
 	void setInt(const char* a_name, int a_value);
 	void setFloat(const char* a_name, float a_value);
+	void setMatrix4x4f(const char* a_name, glm::mat4x4& a_matrix);
 
 	void compile();
 	void use();

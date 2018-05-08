@@ -141,6 +141,11 @@ void ShaderProgram::setFloat(const char* a_name, float a_value)
 	glUniform1f(glGetUniformLocation(m_shaderProgramHandle, a_name), (int)a_value);
 }
 
+void ShaderProgram::setMatrix4x4f(const char * a_name, glm::mat4x4& a_matrix)
+{
+	glUniformMatrix4fv(glGetUniformLocation(m_shaderProgramHandle, a_name), 1, GL_FALSE, glm::value_ptr(a_matrix));
+}
+
 void ShaderProgram::release()
 {
 	glDeleteShader(m_shaderProgramHandle);

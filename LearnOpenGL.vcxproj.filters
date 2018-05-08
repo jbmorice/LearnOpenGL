@@ -46,6 +46,9 @@
     <Filter Include="Source Files\thirdparty\dear_imgui">
       <UniqueIdentifier>{03d76781-2526-41f0-96a2-b728a6913097}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ex1_getting_started\ex1_7_camera">
+      <UniqueIdentifier>{b06a1600-5a7a-48f8-9c4b-35b011276dd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="thirdparty\glad\src\glad.c">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="thirdparty\dear_imgui\stb_truetype.h">
       <Filter>Header Files\thirdparty\dear_imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ex1_getting_started\ex1_7_camera\ex1_7_camera.hpp">
+      <Filter>Source Files\ex1_getting_started\ex1_7_camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

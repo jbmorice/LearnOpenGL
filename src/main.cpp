@@ -10,6 +10,7 @@
 #include "ex1_getting_started/ex1_4_textures/ex1_4_textures.hpp"
 #include "ex1_getting_started/ex1_5_transformations/ex1_5_transformations.hpp"
 #include "ex1_getting_started/ex1_6_coordinate_systems/ex1_6_coordinate_systems.hpp"
+#include "ex1_getting_started/ex1_7_camera/ex1_7_camera.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -26,6 +27,7 @@ int main(int argc, char* argv[])
 	exercises.push_back(&Ex1_4_Textures());
 	exercises.push_back(&Ex1_5_Transformations());
 	exercises.push_back(&Ex1_6_Coordinate_Systems());
+	exercises.push_back(&Ex1_7_Camera());
 
 	std::cout << "Exercises : " << std::endl;
 	for(int i = 0; i < exercises.size(); i++)

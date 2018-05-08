@@ -1,5 +1,5 @@
-#ifndef EX1_6_COORDINATE_SYSTEMS
-#define EX1_6_COORDINATE_SYSTEMS
+#ifndef EX1_7_CAMERA
+#define EX1_7_CAMERA
 #pragma once
 
 #include "../../exercise_base.h"
@@ -7,7 +7,7 @@
 
 #include <vector>
 
-class Ex1_6_Coordinate_Systems : public ExerciseBase
+class Ex1_7_Camera : public ExerciseBase
 {
 private:
 	unsigned int m_crateTexture;
@@ -24,8 +24,32 @@ private:
 
 	std::vector<glm::vec3> m_cubePositions;
 
+	glm::vec3 m_cameraPosition;
+	glm::vec3 m_cameraTarget;
+	glm::vec3 m_cameraDirection;
+	glm::vec3 m_cameraRight;
+	glm::vec3 m_cameraUp;
+	glm::vec3 m_cameraFront;
+	float m_cameraSpeed = 3.5f;
+	bool m_firstMouse = true;
+	float m_lastX = m_windowWidth / 2;
+	float m_lastY = m_windowHeight / 2;
+	float m_pitch = 0.0f;
+	float m_yaw = -90.0f;
+	float m_fov = 45.0f;
+
 	void prepare() override
 	{
+		//Callbacks
+		// ==============================
+		// Store a pointer to this object in glfw to use as a reference in the static callback functions
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwSetWindowUserPointer(m_window, this);
+
+		// Set mouse callbacks for camera
+		glfwSetCursorPosCallback(m_window, glfwCursorPosCallback);
+		glfwSetScrollCallback(m_window, glfwScrollCallback);
+
 		// Prepare the shader
 		// ==============================
 		m_shaderProgram = ShaderProgram("./src/ex1_getting_started/ex1_6_coordinate_systems/shaders/shader.vert", "./src/ex1_getting_started/ex1_6_coordinate_systems/shaders/shader.frag");
@@ -46,16 +70,16 @@ private:
 
 		float vertices[] = {
 			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+			0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
 			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
 			-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
 			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+			0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+			0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
 			-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
 			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
@@ -66,24 +90,24 @@ private:
 			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 			-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+			0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+			0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
 			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+			0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+			0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
 			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 			-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 
 			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+			0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+			0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 			-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 		};
@@ -175,13 +199,21 @@ private:
 
 		stbi_image_free(data);
 
-		// Matrices
+		// Camera
 		// ==============================
-		m_view = glm::mat4x4(1.0f);
-		m_view = glm::translate(m_view, glm::vec3(0.0f, 0.0f, -3.0f));
-		m_projection = glm::mat4x4(1.0f);
-		m_projection = glm::perspective(glm::radians(45.0f), (float) getWindowWidth() / (float) getWindowHeight(), 0.1f, 100.0f);
+		m_cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
+		m_cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+		m_cameraDirection = glm::normalize(m_cameraPosition - m_cameraTarget);
 
+		m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		m_cameraRight = glm::normalize(glm::cross(up, m_cameraDirection));
+
+		m_cameraUp = glm::cross(m_cameraDirection, m_cameraRight);
+
+		// Cubes
+		// ==============================
 		m_cubePositions = {
 			glm::vec3(0.0f,  0.0f,  0.0f),
 			glm::vec3(2.0f,  5.0f, -15.0f),
@@ -195,14 +227,80 @@ private:
 			glm::vec3(-1.3f,  1.0f, -1.5f)
 		};
 
-		// Assign the matrix to the shader uniform (not really useful since done every render loop)
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "model"), 1, GL_FALSE, glm::value_ptr(m_model));
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "view"), 1, GL_FALSE, glm::value_ptr(m_view));
-		glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
-
 		// Enable depth testing
 		glEnable(GL_DEPTH_TEST);
+	}
 
+	void processInput(GLFWwindow* window) override
+	{
+		ExerciseBase::processInput(m_window);
+
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		{
+			m_cameraPosition += m_cameraFront * m_cameraSpeed * m_deltaTime;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		{
+			m_cameraPosition -= m_cameraFront * m_cameraSpeed * m_deltaTime;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		{
+			m_cameraPosition -= glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * m_cameraSpeed * m_deltaTime;
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		{
+			m_cameraPosition += glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * m_cameraSpeed * m_deltaTime;
+		}
+	}
+
+	static void glfwCursorPosCallback(GLFWwindow* a_window, double a_xpos, double a_ypos)
+	{
+		Ex1_7_Camera* ptr = (Ex1_7_Camera*)glfwGetWindowUserPointer(a_window);
+
+		if (ptr->m_firstMouse)
+		{
+			ptr->m_lastX = a_xpos;
+			ptr->m_lastY = a_ypos;
+			ptr->m_firstMouse = false;
+		}
+
+		float xoffset = a_xpos - ptr->m_lastX;
+		float yoffset = ptr->m_lastY - a_ypos;
+		ptr->m_lastX = a_xpos;
+		ptr->m_lastY = a_ypos;
+
+		float sensitivity = 0.1f;
+		xoffset *= sensitivity;
+		yoffset *= sensitivity;
+
+		ptr->m_yaw += xoffset;
+		ptr->m_pitch += yoffset;
+
+		if (ptr->m_pitch > 89.0f)
+			ptr->m_pitch = 89.0f;
+		if (ptr->m_pitch < -89.0f)
+			ptr->m_pitch = -89.0f;
+
+		glm::vec3 front;
+		front.x = cos(glm::radians(ptr->m_yaw)) * cos(glm::radians(ptr->m_pitch));
+		front.y = sin(glm::radians(ptr->m_pitch));
+		front.z = sin(glm::radians(ptr->m_yaw)) * cos(glm::radians(ptr->m_pitch));
+		ptr->m_cameraFront = glm::normalize(front);
+	}
+
+	static void glfwScrollCallback(GLFWwindow* a_window, double a_xoffset, double a_yoffset)
+	{
+		Ex1_7_Camera* ptr = (Ex1_7_Camera*)glfwGetWindowUserPointer(a_window);
+
+		if (ptr->m_fov >= 1.0f && ptr->m_fov <= 45.0f)
+			ptr->m_fov -= a_yoffset;
+		if (ptr->m_fov <= 1.0f)
+			ptr->m_fov = 1.0f;
+		if (ptr->m_fov >= 45.0f)
+			ptr->m_fov = 45.0f;
 	}
 
 	void render(float a_deltaTime) override
@@ -219,16 +317,20 @@ private:
 		m_shaderProgram.use();
 		glBindVertexArray(m_VAO);
 
-		for(int i = 0; i < m_cubePositions.size(); i++)
+		m_view = glm::lookAt(m_cameraPosition, m_cameraPosition + m_cameraFront, m_cameraUp);
+		m_shaderProgram.setMatrix4x4f("view", m_view);
+
+		m_projection = glm::perspective(glm::radians(m_fov), (float)getWindowWidth() / (float)getWindowHeight(), 0.1f, 100.0f);
+		m_shaderProgram.setMatrix4x4f("projection", m_projection);
+
+		for (int i = 0; i < m_cubePositions.size(); i++)
 		{
 			// Update matrices
 			m_model = glm::mat4x4(1.0f);
 			m_model = glm::translate(m_model, m_cubePositions[i]);
 			m_model = glm::rotate(m_model, i * glm::radians(20.0f), glm::vec3(1.0f, 0.3f, 0.5f));
 
-			glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "model"), 1, GL_FALSE, glm::value_ptr(m_model));
-			glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "view"), 1, GL_FALSE, glm::value_ptr(m_view));
-			glUniformMatrix4fv(glGetUniformLocation(m_shaderProgram.getHandle(), "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
+			m_shaderProgram.setMatrix4x4f("model", m_model);
 
 			// Render
 			glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -237,6 +339,7 @@ private:
 
 	void cleanup() override
 	{
+		glfwSetWindowUserPointer(m_window, nullptr);
 		m_shaderProgram.release();
 		glDeleteVertexArrays(1, &m_VAO);
 		glDeleteBuffers(1, &m_VBO);
@@ -245,8 +348,8 @@ private:
 	}
 
 public:
-	Ex1_6_Coordinate_Systems()
-		: ExerciseBase("Exercise 1.6 - Coordinate Systems")
+	Ex1_7_Camera()
+		: ExerciseBase("Exercise 1.7 - Camera")
 	{
 	}
 };

@@ -80,7 +80,7 @@ void ExerciseBase::run()
 #endif
 
 		float currentTime = (float) glfwGetTime();
-		float deltaTime = currentTime - oldTime;
+		m_deltaTime = currentTime - oldTime;
 		oldTime = currentTime;
 
 		// Handle inputs
@@ -89,7 +89,7 @@ void ExerciseBase::run()
 		// Rendering happens here
 		// =====
 
-		render(deltaTime);
+		render(m_deltaTime);
 
 #ifdef USE_DEAR_IMGUI
 		ImGui::Render();
