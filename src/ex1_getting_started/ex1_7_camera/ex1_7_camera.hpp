@@ -4,6 +4,7 @@
 
 #include "../../exercise_base.h"
 #include "../../helper/shader_program.h"
+#include "../../helper/camera.h"
 
 #include <vector>
 
@@ -24,19 +25,11 @@ private:
 
 	std::vector<glm::vec3> m_cubePositions;
 
-	glm::vec3 m_cameraPosition;
-	glm::vec3 m_cameraTarget;
-	glm::vec3 m_cameraDirection;
-	glm::vec3 m_cameraRight;
-	glm::vec3 m_cameraUp;
-	glm::vec3 m_cameraFront;
-	float m_cameraSpeed = 3.5f;
+	Camera m_camera;
+
 	bool m_firstMouse = true;
 	float m_lastX = m_windowWidth / 2;
 	float m_lastY = m_windowHeight / 2;
-	float m_pitch = 0.0f;
-	float m_yaw = -90.0f;
-	float m_fov = 45.0f;
 
 	void prepare() override
 	{
@@ -176,7 +169,7 @@ private:
 		glGenTextures(1, &m_smileyTexture); // Generate OpenGL m_crateTexture handle
 		glBindTexture(GL_TEXTURE_2D, m_smileyTexture); // Bind it to a slot
 
-													   // Set the texture wrapping parameters
+		// Set the texture wrapping parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // Set texture wrapping to GL_REPEAT (default wrapping method)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		// Set texture filtering parameters
@@ -201,16 +194,7 @@ private:
 
 		// Camera
 		// ==============================
-		m_cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-		m_cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-		m_cameraDirection = glm::normalize(m_cameraPosition - m_cameraTarget);
-
-		m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-
-		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-		m_cameraRight = glm::normalize(glm::cross(up, m_cameraDirection));
-
-		m_cameraUp = glm::cross(m_cameraDirection, m_cameraRight);
+		m_camera = glm::vec3(0.0f, 0.0f, 3.0f);
 
 		// Cubes
 		// ==============================
@@ -237,22 +221,22 @@ private:
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
-			m_cameraPosition += m_cameraFront * m_cameraSpeed * m_deltaTime;
+			m_camera.processKeyboard(Camera::Movement::FORWARD, m_deltaTime);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
-			m_cameraPosition -= m_cameraFront * m_cameraSpeed * m_deltaTime;
+			m_camera.processKeyboard(Camera::Movement::BACKWARD, m_deltaTime);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
-			m_cameraPosition -= glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * m_cameraSpeed * m_deltaTime;
+			m_camera.processKeyboard(Camera::Movement::LEFT, m_deltaTime);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
-			m_cameraPosition += glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * m_cameraSpeed * m_deltaTime;
+			m_camera.processKeyboard(Camera::Movement::RIGHT, m_deltaTime);
 		}
 	}
 
@@ -272,35 +256,13 @@ private:
 		ptr->m_lastX = a_xpos;
 		ptr->m_lastY = a_ypos;
 
-		float sensitivity = 0.1f;
-		xoffset *= sensitivity;
-		yoffset *= sensitivity;
-
-		ptr->m_yaw += xoffset;
-		ptr->m_pitch += yoffset;
-
-		if (ptr->m_pitch > 89.0f)
-			ptr->m_pitch = 89.0f;
-		if (ptr->m_pitch < -89.0f)
-			ptr->m_pitch = -89.0f;
-
-		glm::vec3 front;
-		front.x = cos(glm::radians(ptr->m_yaw)) * cos(glm::radians(ptr->m_pitch));
-		front.y = sin(glm::radians(ptr->m_pitch));
-		front.z = sin(glm::radians(ptr->m_yaw)) * cos(glm::radians(ptr->m_pitch));
-		ptr->m_cameraFront = glm::normalize(front);
+		ptr->m_camera.processMousePosition(xoffset, yoffset);
 	}
 
 	static void glfwScrollCallback(GLFWwindow* a_window, double a_xoffset, double a_yoffset)
 	{
 		Ex1_7_Camera* ptr = (Ex1_7_Camera*)glfwGetWindowUserPointer(a_window);
-
-		if (ptr->m_fov >= 1.0f && ptr->m_fov <= 45.0f)
-			ptr->m_fov -= a_yoffset;
-		if (ptr->m_fov <= 1.0f)
-			ptr->m_fov = 1.0f;
-		if (ptr->m_fov >= 45.0f)
-			ptr->m_fov = 45.0f;
+		ptr->m_camera.processMouseScroll(a_xoffset, a_yoffset);
 	}
 
 	void render(float a_deltaTime) override
@@ -317,10 +279,10 @@ private:
 		m_shaderProgram.use();
 		glBindVertexArray(m_VAO);
 
-		m_view = glm::lookAt(m_cameraPosition, m_cameraPosition + m_cameraFront, m_cameraUp);
+		m_view = m_camera.getViewMatrix();
 		m_shaderProgram.setMatrix4x4f("view", m_view);
 
-		m_projection = glm::perspective(glm::radians(m_fov), (float)getWindowWidth() / (float)getWindowHeight(), 0.1f, 100.0f);
+		m_projection = m_camera.getPerspectiveProjectionMatrix(getWindowWidth(), getWindowHeight());
 		m_shaderProgram.setMatrix4x4f("projection", m_projection);
 
 		for (int i = 0; i < m_cubePositions.size(); i++)

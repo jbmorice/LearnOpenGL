@@ -49,18 +49,18 @@
     <Filter Include="Source Files\ex1_getting_started\ex1_7_camera">
       <UniqueIdentifier>{b06a1600-5a7a-48f8-9c4b-35b011276dd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\helper">
+      <UniqueIdentifier>{e2714c6a-8b07-4dfe-b5b1-64f6ce21af8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\helper">
+      <UniqueIdentifier>{dc565914-3524-4c3b-a254-d979cc2b2303}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="thirdparty\glad\src\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\exercise_base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\helper\shader_program.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\dear_imgui\imgui.cpp">
@@ -74,6 +74,15 @@
     </ClCompile>
     <ClCompile Include="thirdparty\dear_imgui\imgui_draw.cpp">
       <Filter>Source Files\thirdparty\dear_imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\glad\src\glad.c">
+      <Filter>Source Files\thirdparty</Filter>
+    </ClCompile>
+    <ClCompile Include="src\helper\shader_program.cpp">
+      <Filter>Source Files\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\helper\camera.cpp">
+      <Filter>Source Files\helper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,9 +106,6 @@
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders.hpp">
       <Filter>Source Files\ex1_getting_started\ex1_3_shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="src\helper\shader_program.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_3_shaders\ex1_3_shaders_1.hpp">
       <Filter>Source Files\ex1_getting_started\ex1_3_shaders</Filter>
@@ -139,6 +145,12 @@
     </ClInclude>
     <ClInclude Include="src\ex1_getting_started\ex1_7_camera\ex1_7_camera.hpp">
       <Filter>Source Files\ex1_getting_started\ex1_7_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\helper\shader_program.h">
+      <Filter>Header Files\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="src\helper\camera.h">
+      <Filter>Header Files\helper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
